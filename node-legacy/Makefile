@@ -55,7 +55,7 @@ CONFIGURE_ARGS= \
 	--with-arm-float-abi=softfp \
 	--with-mips-float-abi=soft
 
-TARGET_CFLAGS+= -fpermissive
+TARGET_CXXFLAGS+= -fpermissive
 
 define Build/InstallDev
 	$(INSTALL_DIR) $(1)/opt/include
