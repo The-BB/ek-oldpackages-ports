@@ -9,16 +9,15 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=streamripper
-PKG_VERSION:=1.65.0-alpha-20150804
-PKG_REV:=248f771250998e38a2d8212aa43ccc4a516f853b
 PKG_RELEASE:=2
 
-PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
-PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
-PKG_SOURCE_URL:=https://github.com/streamripper/streamripper.git
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=$(PKG_REV)
-PKG_MIRROR_HASH:=fb99981cd5b8bb9a7f15a5afe91b018cf6efd3bee1b5e606639691c143824dad
+PKG_SOURCE_URL:=https://github.com/streamripper/streamripper.git
+PKG_SOURCE_DATE:=2015-08-04
+PKG_SOURCE_VERSION:=248f771250998e38a2d8212aa43ccc4a516f853b
+PKG_MIRROR_HASH:=6f074c4a5ad6c05904117811c8db6ee5ddace7608e1220d08680d15d0a4b67b4
+
+PKG_VERSION:=1.65.0_git$(subst -,,$(PKG_SOURCE_DATE))~$(call version_abbrev,$(PKG_SOURCE_VERSION))
 
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/cmake.mk
