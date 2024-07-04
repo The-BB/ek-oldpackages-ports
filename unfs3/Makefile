@@ -9,16 +9,15 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=unfs3
-PKG_VERSION:=0.9.23-20150511
-PKG_REV:=5aa8be4012b552b0633b3cbdcd016104a0290167
-PKG_RELEASE:=1
+PKG_RELEASE:=2
 
-PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
-PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
-PKG_SOURCE_URL:=https://github.com/allspace/eunfs3.git
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=$(PKG_REV)
-PKG_MIRROR_HASH:=8180a3b024ad27476ea9a24d64aad34664ca88f4df9570204f63a213699aba5b
+PKG_SOURCE_DATE:=2015-05-11
+PKG_SOURCE_VERSION:=5aa8be4012b552b0633b3cbdcd016104a0290167
+PKG_SOURCE_URL:=https://github.com/allspace/eunfs3.git
+PKG_MIRROR_HASH:=3b1c80dd398a0b3bcfd74901d99ea86f68f20faa7de23c3f31a1e8ae5879136c
+
+PKG_VERSION=0.9.23_git$(subst -,,$(PKG_SOURCE_DATE))~$(call version_abbrev,$(PKG_SOURCE_VERSION))
 
 PKG_FIXUP:=autoreconf
 PKG_BUILD_PARALLEL:=0
@@ -29,13 +28,10 @@ define Package/unfs3
   SECTION:=net
   CATEGORY:=Network
   SUBMENU:=Filesystem
-  DEPENDS:=+rpcbind +libacl
+  DEPENDS:=+rpcbind +libacl +libtirpc
   TITLE:=User-space NFSv3 Server
   URL:=http://unfs3.sourceforge.net/
 endef
-
-CONFIGURE_ARGS += \
-	--without-afp-prefix
 
 define Package/unfs3/description
 	UNFS3 is a user-space implementation of the NFSv3 server
@@ -43,6 +39,13 @@ define Package/unfs3/description
 	protocols, which are used by NFS clients for accessing files
 	on the server.
 endef
+
+TARGET_CPPFLAGS += -I$(STAGING_DIR)/opt/include/tirpc
+TARGET_LDFLAGS += -L$(STAGING_DIR)/opt/lib -ltirpc
+
+CONFIGURE_ARGS += \
+	--without-afp-prefix \
+	CFLAGS="$(TARGET_CFLAGS) $(TARGET_CPPFLAGS)"
 
 define Package/unfs3/install
 	$(INSTALL_DIR) $(1)/opt/etc/init.d
