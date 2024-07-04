@@ -12,9 +12,9 @@ PKG_NAME:=node
 PKG_VERSION:=v12.22.12
 PKG_RELEASE:=1
 
-PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.xz
+PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://nodejs.org/dist/$(PKG_VERSION)
-PKG_HASH:=bc42b7f8495b9bfc7f7850dd180bb02a5bdf139cc232b8c6f02a6967e20714f2
+PKG_HASH:=1a5c52c50185f7c23318e7e8001cc58054736acb98cb8c523d33b136da9e54be
 
 PKG_MAINTAINER:=Hirokazu MORIKAWA <morikw2@gmail.com>, Adrian Panella <ianchi74@outlook.com>
 PKG_LICENSE:=MIT
@@ -39,10 +39,10 @@ define Package/node-12x
   SUBMENU:=Node.js
   TITLE:=Node.js is a platform built on Chrome's JavaScript runtime
   URL:=https://nodejs.org/
-  DEPENDS:= @TARGET_mips_3_4 \
+  DEPENDS:=@mips \
 	   +libstdcpp +libopenssl +zlib +libnghttp2 +libuv \
 	   +libcares +libatomic +NODEJS_12x_ICU_SYSTEM:icu +NODEJS_12x_ICU_SYSTEM:icu-full-data
-ifdef CONFIG_TARGET_mips_3_4
+ifdef CONFIG_mips
   PROVIDES:=node node-npm
 endif
 endef
