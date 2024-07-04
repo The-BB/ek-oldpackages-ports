@@ -9,15 +9,12 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=lmbench
 PKG_VERSION:=3.0-a4
-PKG_REV:=701c6c35b0270d4634fb1dc5272721340322b8ed
-PKG_RELEASE:=1
+PKG_RELEASE:=2
 
-PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
-PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
-PKG_SOURCE_URL:=https://github.com/intel/lmbench.git
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=$(PKG_REV)
-PKG_MIRROR_HASH:=4f763faa66ff789edc17cb710962e2e1ff281121b36c4311238e8c36c769622e
+PKG_SOURCE_VERSION:=701c6c35b0270d4634fb1dc5272721340322b8ed
+PKG_SOURCE_URL:=https://github.com/intel/lmbench.git
+PKG_MIRROR_HASH:=1de47e6dd891328303af48427d7e0c105ebb73b0fb80a685cedac86b08111bd3
 
 include $(INCLUDE_DIR)/package.mk
 
@@ -26,6 +23,7 @@ define Package/lmbench
 	CATEGORY:=Utilities
 	TITLE:=lmbench microbenchmarks
 	URL:=http://sourceforge.net/projects/lmbench
+	DEPENDS:=+libtirpc
 endef
 
 define Package/lmbench/description
@@ -33,7 +31,12 @@ define Package/lmbench/description
  system and hardware system metrics.
 endef
 
+TARGET_CPPFLAGS += -I$(STAGING_DIR)/opt/include/tirpc
+TARGET_LDFLAGS += -L$(STAGING_DIR)/opt/lib -ltirpc
+
 MAKE_PATH:=src
+
+MAKE_VARS += CPPFLAGS="$(TARGET_CPPFLAGS)"
 
 LMBENCH_FILES:= \
 	bw_file_rd \
