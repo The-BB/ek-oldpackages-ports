@@ -1,0 +1,31 @@
+MuleDebug.cpp:70:14: error: 'set_terminate' is not a member of 'std'
+   70 |         std::set_terminate(std::abort);
+      |              ^~~~~~~~~~~~~
+MuleDebug.cpp: In function 'void InstallMuleExceptionHandler()':
+MuleDebug.cpp:113:14: error: 'set_terminate' is not a member of 'std'
+  113 |         std::set_terminate(OnUnhandledException);
+      |              ^~~~~~~~~~~~~
+---
+
+--- a/src/libs/common/MuleDebug.cpp
++++ b/src/libs/common/MuleDebug.cpp
+@@ -67,7 +67,9 @@ void OnUnhandledException()
+ 	// Revert to the original exception handler, to avoid
+ 	// infinate recursion, in case something goes wrong in
+ 	// this function.
++#ifdef DEBUG
+ 	std::set_terminate(std::abort);
++#endif
+ 
+ #ifdef HAVE_CXXABI
+ 	std::type_info *t = __cxxabiv1::__cxa_current_exception_type();
+@@ -110,7 +112,9 @@ void OnUnhandledException()
+ 
+ void InstallMuleExceptionHandler()
+ {
++#ifdef DEBUG
+ 	std::set_terminate(OnUnhandledException);
++#endif
+ }
+ 
+ 
