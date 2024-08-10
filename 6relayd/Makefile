@@ -40,6 +40,10 @@ endef
 
 TARGET_CFLAGS += -Wno-stringop-truncation
 
+ifneq ($(CONFIG_GCC_USE_VERSION_8),y)
+TARGET_CFLAGS +=-Wno-error=address-of-packed-member
+endif
+
 define Package/6relayd/install
 	$(INSTALL_DIR) $(1)/opt/sbin/
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/6relayd $(1)/opt/sbin/
