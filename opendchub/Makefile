@@ -34,6 +34,10 @@ define Package/opendchub/description
 	for the Direct Connect network
 endef
 
+ifneq ($(CONFIG_GCC_USE_VERSION_8),y)
+TARGET_CFLAGS += -fcommon
+endif
+
 CONFIGURE_ARGS += \
 	--disable-perl
 
