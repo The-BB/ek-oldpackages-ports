@@ -33,6 +33,10 @@ define Package/wput/description
  speed-limit.
 endef
 
+ifneq ($(CONFIG_GCC_USE_VERSION_8),y)
+TARGET_CFLAGS += -fcommon
+endif
+
 CONFIGURE_ARGS += \
 	--disable-g-switch \
 	--without-ssl \
