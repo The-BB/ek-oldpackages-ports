@@ -1,0 +1,38 @@
+# aarch64
+
+.../src/ndp.c: In function 'handle_solicit':
+.../src/ndp.c:256:31: error: absolute value function 'abs' given an argument of
+ type 'time_t' {aka 'long int'} but has parameter of type 'int' which may cause
+ truncation of value [-Werror=absolute-value]
+  256 |         if (n && (n->iface || abs(n->timeout - now) < 5)) {
+      |                               ^~~
+.../src/ndp.c: In function 'find_neighbor':
+.../src/ndp.c:416:34: error: absolute value function 'abs' given an argument of
+ type 'time_t' {aka 'long int'} but has parameter of type 'int' which may cause
+ truncation of value [-Werror=absolute-value]
+  416 |                 if (!n->iface && abs(n->timeout - now) >= 5)
+      |                                  ^~~
+cc1: all warnings being treated as errors
+
+---
+
+--- a/src/ndp.c
++++ b/src/ndp.c
+@@ -253,7 +253,7 @@ static void handle_solicit(void *addr, v
+ 	time_t now = time(NULL);
+ 
+ 	struct ndp_neighbor *n = find_neighbor(&req->nd_ns_target, false);
+-	if (n && (n->iface || abs(n->timeout - now) < 5)) {
++	if (n && (n->iface || labs(n->timeout - now) < 5)) {
+ 		syslog(LOG_NOTICE, "%s is on %s", ipbuf,
+ 				(n->iface) ? n->iface->ifname : "<pending>");
+ 		if (!n->iface || n->iface == iface)
+@@ -413,7 +413,7 @@ static struct ndp_neighbor* find_neighbo
+ 				(n->len == 128 && IN6_ARE_ADDR_EQUAL(&n->addr, addr)))
+ 			return n;
+ 
+-		if (!n->iface && abs(n->timeout - now) >= 5)
++		if (!n->iface && labs(n->timeout - now) >= 5)
+ 			free_neighbor(n);
+ 	}
+ 	return NULL;
