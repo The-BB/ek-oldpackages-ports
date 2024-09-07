@@ -1,0 +1,22 @@
+--- a/MainLinux.cpp
++++ b/MainLinux.cpp
+@@ -33,7 +33,7 @@
+ #include "AppDefines.h"
+ #include "MailSvr.h"
+ 
+-#define RUNNING_PIDS_DIR            "/var/run"
++#define RUNNING_PIDS_DIR            "/opt/var/run"
+ #define DEVNULL                     "/dev/null"
+ #define NOFILE                      64
+ #define XMAIL_DEBUG_OPTION          "-Md"
+--- a/SysDepUnix.cpp
++++ b/SysDepUnix.cpp
+@@ -1746,7 +1746,7 @@ char *SysGetTempDir(char *pszPath, int i
+ 	char const *pszEnv;
+ 
+ 	if ((pszEnv = getenv("XMAIL_TEMP")) == NULL)
+-		pszEnv = "/tmp/";
++		pszEnv = "/opt/tmp/";
+ 	StrNCpy(pszPath, pszEnv, iMaxPath - 1);
+ 	AppendSlash(pszPath);
+ 

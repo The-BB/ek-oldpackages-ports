@@ -32,6 +32,8 @@ define Package/xmail/description
  multiple domains, virtual users and spam protection.
 endef
 
+TARGET_CXXFLAGS += $(if $(CONFIG_USE_MUSL),-DSIGCLD=SIGCHLD)
+
 define Build/Compile
 	CFLAGS="$(TARGET_CXXFLAGS)" \
 	$(MAKE) -C $(PKG_BUILD_DIR) -f Makefile.lnx \

@@ -1,0 +1,20 @@
+.../include/sys/poll.h:1:2: warning: #warning redirecting incorrect #include <sys/poll.h> to <poll.h> [-Wcpp]
+    1 | #warning redirecting incorrect #include <sys/poll.h> to <poll.h>
+      |  ^~~~~~~
+
+---
+
+--- a/SysIncludeLinux.h
++++ b/SysIncludeLinux.h
+@@ -31,7 +31,11 @@
+ #include <sys/file.h>
+ #include <sys/ioctl.h>
+ #include <sys/sendfile.h>
++#ifdef __GLIBC__
+ #include <sys/poll.h>
++#else /*musl */
++#include <poll.h>
++#endif /*musl */
+ #include <sys/mman.h>
+ #include <sys/vfs.h>
+ #include <sys/sysinfo.h>
