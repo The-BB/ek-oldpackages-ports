@@ -27,6 +27,7 @@ define Package/6relayd
   SECTION:=net
   CATEGORY:=Network
   TITLE:=DHCPv6(-PD)/RA Server & Relay
+  DEPENDS:=@!USE_MUSL
 endef
 
 define Package/6relayd/description
