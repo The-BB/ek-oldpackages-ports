@@ -40,6 +40,11 @@ define Package/unfs3/description
 	on the server.
 endef
 
+# error: 'off64_t' undeclared (first use in this function); did you mean 'off_t'?
+ifeq ($(CONFIG_USE_MUSL),y)
+TARGET_CFLAGS += -D_LARGEFILE64_SOURCE
+endif
+
 TARGET_CPPFLAGS += -I$(STAGING_DIR)/opt/include/tirpc
 TARGET_LDFLAGS += -L$(STAGING_DIR)/opt/lib -ltirpc
 
