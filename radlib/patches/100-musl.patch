@@ -1,0 +1,18 @@
+../src/radsysutils.c:188:32: error: 'O_RDWR' undeclared (first use in this function)
+  188 |     filed = open ("/dev/null", O_RDWR);
+      |                                ^~~~~~
+
+---
+
+--- a/src/radsysutils.c
++++ b/src/radsysutils.c
+@@ -51,6 +51,9 @@
+ */
+ #include <radsysutils.h>
+ 
++#ifndef __GLIBC__
++#include <fcntl.h>
++#endif /* musl */
+ 
+ /*  ... global memory declarations
+ */
