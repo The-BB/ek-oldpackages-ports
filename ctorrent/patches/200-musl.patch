@@ -1,0 +1,24 @@
+compat.c: In function 'strnstr':
+compat.c:70:3: error: unknown type name 'ssize_t'; did you mean 'size_t'?
+   70 |   ssize_t plen;
+      |   ^~~~~~~
+      |   size_t
+compat.c:71:3: error: unknown type name 'ssize_t'; did you mean 'size_t'?
+   71 |   ssize_t len = strlen(needle);
+      |   ^~~~~~~
+      |   size_t
+
+---
+
+--- a/compat.c
++++ b/compat.c
+@@ -63,6 +63,9 @@ int snprintf(char *str, size_t size, con
+ 
+ #ifndef HAVE_STRNSTR
+ #include <string.h>
++#ifndef __GLIBC__
++#include <unistd.h>
++#endif /* musl */
+ /* FUNCTION PROGRAMER: Siberiaic Sang */
+ char *strnstr(const char *haystack, const char *needle, size_t haystacklen)
+ {
