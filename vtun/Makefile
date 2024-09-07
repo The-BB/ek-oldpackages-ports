@@ -56,13 +56,14 @@ endef
 CONFIGURE_ARGS += \
 	$(if $(CONFIG_VTUN_LZO),--with-lzo-lib="$(STAGING_DIR)/opt/lib/",--disable-zlib) \
 	$(if $(CONFIG_VTUN_LZO),--with-lzo-headers="$(STAGING_DIR)/opt/include/lzo",--disable-lzo) \
-	$(if $(CONFIG_VTUN_SSL),--with-ssl-headers="$(STAGING_DIR)/opt/include/openssl",--disable-ssl) \
-
-CONFIGURE_VARS += \
-	LIBS="$(TARGET_LDFLAGS)" \
 	$(if $(CONFIG_VTUN_LZO),LZO_HDR_DIR="$(STAGING_DIR)/opt/include/lzo") \
+	$(if $(CONFIG_VTUN_SSL),--with-ssl-headers="$(STAGING_DIR)/opt/include/openssl",--disable-ssl) \
 	$(if $(CONFIG_VTUN_SSL),BLOWFISH_HDR_DIR="$(STAGING_DIR)/opt/include/openssl") \
 	$(if $(CONFIG_VTUN_SSL),SSL_HDR_DIR="$(STAGING_DIR)/opt/include/openssl") \
+	LIBS="$(TARGET_LDFLAGS)"
+
+CONFIGURE_VARS += \
+	$(if $(CONFIG_USE_MUSL),ac_cv_search_setproctitle=no)
 
 TARGET_CFLAGS += -DHAVE_WORKING_FORK
 
