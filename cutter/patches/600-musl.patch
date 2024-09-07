@@ -1,0 +1,22 @@
+.../include/netinet/if_ether.h:115:8: error: redefinition of 'struct ethhdr'
+  115 | struct ethhdr {
+      |        ^~~~~~
+In file included from .../cutter-1.04/cutter.c:47:
+.../include/linux/if_ether.h:148:8: note: originally defined here
+  148 | struct ethhdr {
+      |        ^~~~~~
+
+---
+
+--- a/cutter.c
++++ b/cutter.c
+@@ -44,7 +44,9 @@
+ #include <linux/socket.h>
+ #include <linux/ip.h>
+ #include <linux/tcp.h>
++#ifdef __GLIBC__
+ #include <linux/if_ether.h>
++#endif
+ #include <fcntl.h>
+ #include <netpacket/packet.h>
+ #include <net/ethernet.h>     /* the L2 protocols */
