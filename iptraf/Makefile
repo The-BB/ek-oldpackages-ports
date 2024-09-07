@@ -22,7 +22,7 @@ include $(INCLUDE_DIR)/package.mk
 define Package/iptraf
   SECTION:=net
   CATEGORY:=Network
-  DEPENDS:=+libncurses
+  DEPENDS:=+libncurses @!USE_MUSL
   TITLE:=A console-based network monitoring program
   URL:=http://iptraf.seul.org/
 endef
