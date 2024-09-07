@@ -33,15 +33,9 @@ define Package/curlftpfs/description
   based on FUSE and libcurl.
 endef
 
-EXTRA_CFLAGS += \
-	-I$(ICONV_PREFIX)/include \
+TARGET_CFLAGS += \
 	-I$(STAGING_DIR)/opt/include/fuse \
-	-DICONV_CONST=const
-
-EXTRA_LDFLAGS += \
-	-L$(INTL_PREFIX)/lib \
-	-L$(ICONV_PREFIX)/lib \
-	-lpthread
+	-pthread
 
 define Package/curlftpfs/install
 	$(INSTALL_DIR) $(1)/opt/bin

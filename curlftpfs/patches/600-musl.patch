@@ -1,0 +1,22 @@
+ftpfs.c:693:8: error: unknown type name '__off_t'
+  693 | static __off_t test_size(const char* path)
+      |        ^~~~~~~
+...
+ftpfs.c:956:3: error: unknown type name '__off_t'; did you mean 'off_t'?
+  956 |   __off_t size = (long long int)test_size(path);
+      |   ^~~~~~~
+      |   off_t
+
+---
+
+--- a/ftpfs.c
++++ b/ftpfs.c
+@@ -690,6 +690,8 @@ static int test_exists(const char* path)
+ 	return ftpfs_getattr(path, &sbuf);
+ }
+ 
++#define __off_t off_t /* musl */
++
+ static __off_t test_size(const char* path)
+ {
+ 	struct stat sbuf;
