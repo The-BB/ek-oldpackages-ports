@@ -1,0 +1,21 @@
+.../*-openwrt-linux-musl/bin/ld.bfd: rshp.o: in function `process_rsh_request':
+rshp.c:(.text+0x544): undefined reference to `rresvport'
+collect2: error: ld returned 1 exit status
+
+---
+
+--- a/rshp.c
++++ b/rshp.c
+@@ -125,10 +125,12 @@ process_rsh_request(int client) {
+ 		srem.sin_port = htons(port);
+ 
+ 		port = IPPORT_RESERVED - 1;
++#ifdef HASRRESVPORT
+ 		if( (rsock = rresvport(&port)) == -1) {
+ 			reset_socket(client);
+ 			return -1;
+ 		}
++#endif /* musl */
+ 	
+ 		if( connect(rsock, (struct sockaddr *)&srem,
+ 			sizeof(struct sockaddr_in)) == -1) {

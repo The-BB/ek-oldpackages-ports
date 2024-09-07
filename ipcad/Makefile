@@ -23,7 +23,7 @@ include $(INCLUDE_DIR)/package.mk
 define Package/ipcad
   SECTION:=net
   CATEGORY:=Network
-  DEPENDS:=+libpcap +libpthread
+  DEPENDS:=+libpcap
   TITLE:=listens for traffic on the specified interfaces
   URL:=http://lionet.info/ipcad/
 endef
