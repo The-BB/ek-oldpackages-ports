@@ -35,7 +35,6 @@ endef
 
 define Package/dansguardian/conffiles
 /opt/etc/dansguardian/dansguardianf1.conf
-/opt/etc/config/dansguardian
 endef
 
 TARGET_CXXFLAGS += -std=gnu++98
@@ -63,7 +62,7 @@ define Package/dansguardian/install
 	$(INSTALL_DIR) $(1)/opt/share/dansguardian/languages/ukenglish
 	$(CP) $(PKG_INSTALL_DIR)/opt/share/dansguardian/languages/ukenglish/* \
 		$(1)/opt/share/dansguardian/languages/ukenglish/
-	$(INSTALL_DIR) $(1)/opt/etc/init.d $(1)/opt/var/run
+	$(INSTALL_DIR) $(1)/opt/etc/init.d
 	$(INSTALL_BIN) ./files/S24dansguardian $(1)/opt/etc/init.d
 endef
 

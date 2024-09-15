@@ -1,10 +1,21 @@
 #!/bin/sh
 
 ENABLED=yes
-PROCS=dansguardian
+
+DESC="DansGuardian"
+PROCS="dansguardian"
+PROG="/opt/sbin/$PROCS"
+
+PID_FILE="/opt/var/run/$PROCS.pid"
+
+pre_cmd() {
+  rm -f "PID_FILE"
+  [ -d "/opt/var/log/$PROCS" ] || \
+  mkdir -pm /opt/var/log/"$PROCS"
+}
+
+PRECMD="pre_cmd"
 ARGS=""
 PREARGS=""
-DESC=$PROCS
-PATH=/opt/sbin:/opt/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 . /opt/etc/init.d/rc.func

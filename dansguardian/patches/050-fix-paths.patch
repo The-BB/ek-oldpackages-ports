@@ -1,0 +1,39 @@
+--- a/src/BackedStore.hpp
++++ b/src/BackedStore.hpp
+@@ -14,7 +14,7 @@ public:
+ 	// Constructor - pass in RAM & disk thresholds
+ 	// and a directory path for temp files
+ 	BackedStore(size_t _ramsize, size_t _disksize,
+-		const char *_tempdir = "/tmp");
++		const char *_tempdir = "/opt/tmp");
+ 	~BackedStore();
+ 
+ 	// Add data to the store - returns false if
+--- a/src/OptionContainer.cpp
++++ b/src/OptionContainer.cpp
+@@ -136,13 +136,13 @@ bool OptionContainer::read(const char *f
+ 		if (type == 0 || type == 2) {
+ 
+ 			if ((ipc_filename = findoptionS("ipcfilename")) == "")
+-				ipc_filename = "/tmp/.dguardianipc";
++				ipc_filename = "/opt/tmp/.dguardianipc";
+ 
+ 			if ((urlipc_filename = findoptionS("urlipcfilename")) == "")
+-				urlipc_filename = "/tmp/.dguardianurlipc";
++				urlipc_filename = "/opt/tmp/.dguardianurlipc";
+ 
+ 			if ((ipipc_filename = findoptionS("ipipcfilename")) == "")
+-				ipipc_filename = "/tmp/.dguardianipipc";
++				ipipc_filename = "/opt/tmp/.dguardianipipc";
+ 
+ 			if ((pid_filename = findoptionS("pidfilename")) == "") {
+ 				pid_filename = __PIDDIR;
+@@ -198,7 +198,7 @@ bool OptionContainer::read(const char *f
+ #ifdef __SSLCERT
+ 		ssl_certificate_path = findoptionS("sslcertificatepath") + "/";
+ 		if (ssl_certificate_path == "/"){
+-			ssl_certificate_path = "/etc/ssl/certs/";
++			ssl_certificate_path = "/opt/etc/ssl/certs/";
+ 		}
+ #endif
+ 
