@@ -1,10 +1,21 @@
 #!/bin/sh
 
 ENABLED=yes
-PROCS=opendchub
-ARGS="-s -w /opt/var/opendchub"
+
+DESC="Open Direct Connect hub"
+PROCS="opendchub"
+PROG="/opt/bin/$PROCS"
+
+#export ODCH_HOME="/opt/var/lib/$PROCS"
+
+pre_cmd() {
+  [ -d "/opt/var/lib/$PROCS" ] || \
+  mkdir -pm 0750 /opt/var/lib/"$PROCS"
+  cat /opt/etc/$PROCS.conf > /opt/var/lib/"$PROCS"/config
+}
+
+PRECMD="pre_cmd"
+ARGS="-w /opt/var/lib/$PROCS"
 PREARGS=""
-DESC=$PROCS
-PATH=/opt/sbin:/opt/bin:/opt/usr/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 . /opt/etc/init.d/rc.func

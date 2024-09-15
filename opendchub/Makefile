@@ -34,6 +34,10 @@ define Package/opendchub/description
 	for the Direct Connect network
 endef
 
+define Package/opendchub/conffiles
+/opt/etc/opendchub.conf
+endef
+
 ifneq ($(CONFIG_GCC_USE_VERSION_8),y)
 TARGET_CFLAGS += -fcommon
 endif
@@ -44,8 +48,10 @@ CONFIGURE_ARGS += \
 define Package/opendchub/install
 	$(INSTALL_DIR) $(1)/opt/bin
 	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/opt/bin/opendchub $(1)/opt/bin/
-	$(INSTALL_DIR) $(1)/opt/var/opendchub $(1)/opt/etc/init.d
+	$(INSTALL_DIR) $(1)/opt/etc/init.d
 	$(INSTALL_BIN) ./files/S61opendchub $(1)/opt/etc/init.d
+	$(INSTALL_DATA) $(PKG_BUILD_DIR)/Documentation/configfiles \
+		$(1)/opt/etc/opendchub.conf
 endef
 
 $(eval $(call BuildPackage,opendchub))

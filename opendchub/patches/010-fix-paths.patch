@@ -1,0 +1,21 @@
+--- a/src/fileio.c
++++ b/src/fileio.c
+@@ -2032,15 +2032,15 @@ int init_dirs(void)
+ 	struct passwd *user = getpwuid(dchub_user);
+ 	snprintf( working_dir, MAX_FDP_LEN, "%s", user->pw_dir );
+ #else
+-	if( getenv( "HOME" ) == NULL )
++	if( getenv( "ODCH_HOME" ) == NULL )
+ 	   return 0;
+    
+-	snprintf( working_dir, MAX_FDP_LEN, "%s", getenv( "HOME" ) );
++	snprintf( working_dir, MAX_FDP_LEN, "%s", getenv( "ODCH_HOME" ) );
+ #endif
+ #endif
+      }
+    strncpy(path, working_dir, MAX_FDP_LEN);
+-   snprintf( config_dir, MAX_FDP_LEN, "%s/.opendchub", path );
++   snprintf( config_dir, MAX_FDP_LEN, "%s", path );
+ 
+    sprintfa(path, "/tmp");
+    sprintf(un_sock_path, "%s/%s", path, UN_SOCK_NAME);
