@@ -1,10 +1,12 @@
 #!/bin/sh
 
 ENABLED=yes
-PROCS=nzbget
+
+DESC="Newsgrabber client/server for nzb-files"
+PROCS="nzbget"
+PROG="/opt/bin/$PROCS"
+
 ARGS="-D"
 PREARGS=""
-DESC=$PROCS
-PATH=/opt/sbin:/opt/bin:/opt/usr/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 . /opt/etc/init.d/rc.func
