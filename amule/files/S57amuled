@@ -1,10 +1,31 @@
 #!/bin/sh
 
 ENABLED=yes
-PROCS=amuled
-ARGS="-f -c /opt/var/amule"
+
+DESC="eMule-like ed2k client"
+PROCS="amuled"
+PROG="/opt/bin/$PROCS"
+
+PID_FILE="/opt/var/run/$PROCS.pid"
+
+pre_cmd() {
+  amule_home="/opt/var/lib/amule"
+  amule_conf="$amule_home/amule.conf"
+  amule_pass="$(echo -n MyP@\$\$W0rd | md5sum | cut -d' ' -f1)"
+
+  rm -f "$PID_FILE"
+  rm -f "$amule_home"/muleLock
+  [ -d "$amule_home" ] || {
+  $PROG -c "$amule_home" -r > /dev/null 2>&1
+  grep -q '^AcceptExternalConnections=1' "$amule_conf" || \
+    sed -i 's,ExternalConnections=0,ExternalConnections=1,' "$amule_conf"
+  grep -qE '^ECPassword=[[:alnum:]].*' "$amule_conf" || \
+    sed -i "s,ECPassword=,ECPassword=$amule_pass," "$amule_conf"
+  }
+}
+
+PRECMD="pre_cmd"
+ARGS="-c /opt/var/lib/amule -f -p $PID_FILE"
 PREARGS=""
-DESC=$PROCS
-PATH=/opt/sbin:/opt/bin:/opt/usr/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 . /opt/etc/init.d/rc.func

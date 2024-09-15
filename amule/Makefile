@@ -78,7 +78,6 @@ define Package/amule/install
 	$(CP) $(PKG_INSTALL_DIR)/opt/share/amule $(1)/opt/share
 	$(INSTALL_DIR) $(1)/opt/etc/init.d
 	$(INSTALL_BIN) ./files/S57amuled $(1)/opt/etc/init.d
-	$(INSTALL_DIR) $(1)/opt/var/amule
 endef
 
 $(eval $(call BuildPackage,amule))
