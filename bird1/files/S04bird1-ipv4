@@ -1,10 +1,19 @@
 #!/bin/sh
 
 ENABLED=yes
-PROCS=bird4
-ARGS="-c /opt/etc/bird4.conf"
+
+DESC="BIRD Internet Routing Daemon (IPv4)"
+PROCS="bird4"
+PROG="/opt/sbin/$PROCS"
+
+PID_FILE="/opt/var/run/$PROCS.pid"
+
+pre_cmd() {
+  rm -f "PID_FILE"
+}
+
+PRECMD="pre_cmd"
+ARGS="-c /opt/etc/$PROCS.conf -P $PID_FILE"
 PREARGS=""
-DESC=$PROCS
-PATH=/opt/sbin:/opt/bin:/opt/usr/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 . /opt/etc/init.d/rc.func
