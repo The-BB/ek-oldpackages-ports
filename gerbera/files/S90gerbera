@@ -1,10 +1,26 @@
 #!/bin/sh
 
 ENABLED=yes
-PROCS=gerbera
-ARGS="-l /opt/var/log/gerbera.log -m /opt/etc/gerbera"
+
+DESC="UPnP Media Server"
+PROCS="gerbera"
+PROG="/opt/bin/$PROCS"
+
+PID_FILE="/opt/var/run/$PROCS.pid"
+
+pre_cmd() {
+  rm -f "$PID_FILE"
+  [ -d "/opt/etc/$PROCS" ] || mkdir -pm 0750 /opt/etc/"$PROCS"
+  [ -f "/opt/etc/$PROCS/config.xml" ] || \
+  $PROG --create-config > /opt/etc/"$PROCS"/config.xml
+}
+
+PRECMD="pre_cmd"
+ARGS="\
+-f /opt/etc/$PROCS \
+-m /opt/etc/$PROCS \
+-l /opt/var/log/$PROCS.log \
+-P $PID_FILE"
 PREARGS=""
-DESC=$PROCS
-PATH=/opt/sbin:/opt/bin:/opt/usr/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 . /opt/etc/init.d/rc.func

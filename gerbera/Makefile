@@ -54,19 +54,8 @@ define Package/gerbera/install
 	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/opt/bin/gerbera $(1)/opt/bin
 	$(INSTALL_DIR) $(1)/opt/share
 	$(CP) $(PKG_INSTALL_DIR)/opt/share/gerbera $(1)/opt/share
-	$(INSTALL_DIR) $(1)/opt/etc/gerbera
 	$(INSTALL_DIR) $(1)/opt/etc/init.d
 	$(INSTALL_BIN) ./files/S90gerbera $(1)/opt/etc/init.d
-endef
-
-define Package/gerbera/postinst
-#!/bin/sh
-
-GERBERA_CFG=/opt/etc/gerbera/config.xml
-if [ ! -f $$GERBERA_CFG ]; then
-    gerbera --create-config > $$GERBERA_CFG
-    echo "Please, edit $$GERBERA_CFG first."
-fi
 endef
 
 $(eval $(call BuildPackage,gerbera))
