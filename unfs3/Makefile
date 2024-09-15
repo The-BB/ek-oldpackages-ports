@@ -9,6 +9,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=unfs3
+PKG_VERSION=0.9.23
 PKG_RELEASE:=2
 
 PKG_SOURCE_PROTO:=git
@@ -17,7 +18,7 @@ PKG_SOURCE_VERSION:=5aa8be4012b552b0633b3cbdcd016104a0290167
 PKG_SOURCE_URL:=https://github.com/allspace/eunfs3.git
 PKG_MIRROR_HASH:=3b1c80dd398a0b3bcfd74901d99ea86f68f20faa7de23c3f31a1e8ae5879136c
 
-PKG_VERSION=0.9.23_git$(subst -,,$(PKG_SOURCE_DATE))~$(call version_abbrev,$(PKG_SOURCE_VERSION))
+PKG_VERSION:=$(PKG_VERSION)_git$(subst -,,$(PKG_SOURCE_DATE))~$(call version_abbrev,$(PKG_SOURCE_VERSION))
 
 PKG_FIXUP:=autoreconf
 PKG_BUILD_PARALLEL:=0
