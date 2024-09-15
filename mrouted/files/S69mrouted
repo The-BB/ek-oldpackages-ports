@@ -1,10 +1,12 @@
 #!/bin/sh
 
 ENABLED=yes
-PROCS=mrouted
-ARGS="-c /opt/etc/mrouted.conf"
+
+DESC="Multicast routing daemon"
+PROCS="mrouted"
+PROG="/opt/sbin/$PROCS"
+
+ARGS="-c /opt/etc/$PROCS.conf"
 PREARGS=""
-DESC=$PROCS
-PATH=/opt/sbin:/opt/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 . /opt/etc/init.d/rc.func
