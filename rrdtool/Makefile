@@ -11,7 +11,7 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=rrdtool
 PKG_VERSION:=1.2.30
-PKG_RELEASE:=3a
+PKG_RELEASE:=4
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://oss.oetiker.ch/rrdtool/pub/archive/
