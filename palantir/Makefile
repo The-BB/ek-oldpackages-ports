@@ -10,12 +10,16 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=palantir
-PKG_VERSION:=2.8pre3
-PKG_RELEASE:=2
+PKG_VERSION:=2.8_pre3
+PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-server-20130906.tgz
 PKG_SOURCE_URL:=http://www.fastpath.it/products/palantir/pub/
 PKG_HASH:=ab7890d589be2e5c50405405361de520a9b14b7924d74e31c84e4f5cb3ee0130
+
+PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-server-20130906
+
+include $(INCLUDE_DIR)/package.mk
 
 define Package/palantir
 	SECTION:=multimedia
@@ -34,10 +38,6 @@ endef
 define Package/palantir/conffiles
 /opt/etc/palantir.conf
 endef
-
-PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-server-20130906
-
-include $(INCLUDE_DIR)/package.mk
 
 export CPPFLAGS=$(TARGET_CPPFLAGS)
 export LDFLAGS=$(TARGET_LDFLAGS)
