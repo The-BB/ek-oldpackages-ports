@@ -9,15 +9,17 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=ctorrent
-PKG_VERSION:=dnh3.3.2
-PKG_RELEASE:=8
+PKG_VERSION:=3.3.2
+PKG_RELEASE:=1
 
-PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
+PKG_SOURCE:=$(PKG_NAME)-dnh$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=@SF/dtorrent \
 	http://www.rahul.net/dholmes/ctorrent/
 PKG_HASH:=c87366c91475931f75b924119580abd06a7b3cb3f00fef47346552cab1e24863
 
 include $(INCLUDE_DIR)/package.mk
+
+PKG_UNPACK += --strip-components=1 -C $(PKG_BUILD_DIR)
 
 define Package/ctorrent/Default
   SUBMENU:=BitTorrent
