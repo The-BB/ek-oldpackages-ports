@@ -9,11 +9,11 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=node
-PKG_VERSION:=v12.22.12
+PKG_VERSION:=12.22.12
 PKG_RELEASE:=1
 
-PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
-PKG_SOURCE_URL:=https://nodejs.org/dist/$(PKG_VERSION)
+PKG_SOURCE:=$(PKG_NAME)-v$(PKG_VERSION).tar.gz
+PKG_SOURCE_URL:=https://nodejs.org/dist/v$(PKG_VERSION)
 PKG_HASH:=1a5c52c50185f7c23318e7e8001cc58054736acb98cb8c523d33b136da9e54be
 
 PKG_MAINTAINER:=Hirokazu MORIKAWA <morikw2@gmail.com>, Adrian Panella <ianchi74@outlook.com>
@@ -32,6 +32,9 @@ PKG_ASLR_PIE:=0
 
 #include $(INCLUDE_DIR)/host-build.mk
 include $(INCLUDE_DIR)/package.mk
+
+#HOST_UNPACK += --strip-components=1 -C $(HOST_BUILD_DIR)
+PKG_UNPACK += --strip-components=1 -C $(PKG_BUILD_DIR)
 
 define Package/node-12x
   SECTION:=lang
