@@ -13,7 +13,7 @@ pre_cmd() {
 }
 
 PRECMD="pre_cmd"
-ARGS=""
+ARGS="-i $PID_FILE"
 PREARGS=""
 
 . /opt/etc/init.d/rc.func
