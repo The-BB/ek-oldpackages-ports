@@ -1,0 +1,35 @@
+musl:
+checking for b64_ntop... configure: error: in `.../eggdrop-1.10.0':
+configure: error: cannot run test program while cross compiling
+See `config.log' for more details
+...
+./configure: line 12576: ./tmpfile: cannot execute binary file: Exec format error
+
+---
+
+--- a/configure
++++ b/configure
+@@ -8318,10 +8318,10 @@ rm -rf conftest*
+ printf %s "checking for b64_ntop... " >&6; }
+   if test "$cross_compiling" = yes
+ then :
+-  { { printf "%s\n" "$as_me:${as_lineno-$LINENO}: error: in \`$ac_pwd':" >&5
+-printf "%s\n" "$as_me: error: in \`$ac_pwd':" >&2;}
+-as_fn_error $? "cannot run test program while cross compiling
+-See \`config.log' for more details" "$LINENO" 5; }
++#  { { printf "%s\n" "$as_me:${as_lineno-$LINENO}: error: in \`$ac_pwd':" >&5
++#printf "%s\n" "$as_me: error: in \`$ac_pwd':" >&2;}
++#as_fn_error $? "cannot run test program while cross compiling
++#See \`config.log' for more details" "$LINENO" 5; }
+ else $as_nop
+   cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+ /* end confdefs.h.  */
+@@ -12587,7 +12587,7 @@ int main(void) {
+  return 0;
+ }
+ EOF
+-    $CC $SSL_INCLUDES tmp.c -o "$tmpout" >/dev/null 2>&1
++    gcc $SSL_INCLUDES tmp.c -o "$tmpout" >/dev/null 2>&1
+     if test -x "./$tmpout"; then
+       tls_version=$("./$tmpout")
+       tls_versionf=
