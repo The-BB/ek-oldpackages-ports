@@ -9,13 +9,17 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=ctorrent
-PKG_VERSION:=3.3.2
+PKG_REAL_VERSION:=dnh3.3.2
+PKG_VERSION:=$(subst dnh,,$(PKG_REAL_VERSION))
 PKG_RELEASE:=1
 
-PKG_SOURCE:=$(PKG_NAME)-dnh$(PKG_VERSION).tar.gz
+PKG_SOURCE:=$(PKG_NAME)-$(PKG_REAL_VERSION).tar.gz
 PKG_SOURCE_URL:=@SF/dtorrent \
 	http://www.rahul.net/dholmes/ctorrent/
 PKG_HASH:=c87366c91475931f75b924119580abd06a7b3cb3f00fef47346552cab1e24863
+
+PKG_LICENSE:=GPL-2.0-only
+PKG_LICENSE_FILES:=COPYING
 
 include $(INCLUDE_DIR)/package.mk
 
@@ -32,9 +36,9 @@ define Package/ctorrent/Default
 endef
 
 define Package/ctorrent/Default/description
-	CTorrent is a BitTorrent client written in the C programming language,
-	known to be a very robust and mature programming language, which produces
-	fast and optimized application.
+  CTorrent is a BitTorrent client written in the C programming language,
+  known to be a very robust and mature programming language, which produces
+  fast and optimized application.
 endef
 
 define Package/ctorrent
@@ -57,7 +61,7 @@ endef
 
 define Package/ctorrent-nossl/description
 $(call Package/ctorrent/Default/description)
- This package is built with builtin (Steve Reid's public-domain) SHA-1 support
+ This package is built with builtin (Steve Reid's public-domain) SHA-1 support.
 endef
 
 CONFIGURE_VARS += \
