@@ -17,6 +17,9 @@ PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=@SF/id3lib
 PKG_HASH:=2749cc3c0cd7280b299518b1ddf5a5bcfe2d1100614519b68702230e26c7d079
 
+PKG_LICENSE:=LGPL-2.0-only
+PKG_LICENSE_FILES:=COPYING
+
 PKG_INSTALL:=1
 
 include $(INCLUDE_DIR)/package.mk
@@ -24,12 +27,12 @@ include $(INCLUDE_DIR)/package.mk
 define Package/id3lib
 	SECTION:=libs
 	CATEGORY:=Libraries
-	DEPENDS:=+zlib $(CXX_DEPENDS)
 	TITLE:=An ID3v1/ID3v2 tag manipulation library
-	URL:=http://www.id3lib.org/
+	URL:=https://id3lib.sourceforge.net/
+	DEPENDS:=+libstdcpp +zlib
 endef
 
-TARGET_CFLAGS += $(FPIC)
+TARGET_CXXFLAGS += $(FPIC)
 
 CONFIGURE_ARGS += \
 	--enable-shared \
