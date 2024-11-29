@@ -9,15 +9,18 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=knock
 PKG_VERSION:=0.8
-PKG_RELEASE:=1
+PKG_RELEASE:=2
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_VERSION:=8b61cefca5e3043c2f5690197e718eb7b3f1ba44
 PKG_SOURCE_URL:=https://github.com/jvinet/knock.git
 PKG_MIRROR_HASH:=f08b79d66d41856c2ad5c053c11e6456f0a3297dc334c76079a993117dec1823
 
-PKG_INSTALL:=1
+PKG_LICENSE:=GPL-2.0-only
+PKG_LICENSE_FILES:=COPYING
+
 PKG_FIXUP:=autoreconf
+PKG_INSTALL:=1
 
 include $(INCLUDE_DIR)/package.mk
 
@@ -36,15 +39,14 @@ define Package/knock
 endef
 
 define Package/knock/Default/description
-	It listens to all traffic on an ethernet (or PPP) interface,
-	looking for special "knock" sequences of port-hits. A client
-	makes these port-hits by sending a TCP (or UDP) packet to a
-	port on the server. This port need not be open -- since
-	knockd listens at the link-layer level, it sees all traffic
-	even if it's destined for a closed port. When the server
-	detects a specific sequence of port-hits, it runs a command
-	defined in its configuration file. This can be used to open
-	up holes in a firewall for quick access.
+  It listens to all traffic on an ethernet (or PPP) interface,
+  looking for special "knock" sequences of port-hits. A client makes these
+  port-hits by sending a TCP (or UDP) packet to a port on the server. This
+  port need not be open -- since knockd listens at the link-layer level, it
+  sees all traffic even if it's destined for a closed port. When the server
+  detects a specific sequence of port-hits, it runs a command defined in its
+  configuration file. This can be used to open up holes in a firewall for
+  quick access.
 endef
 
 define Package/knock/description
@@ -63,6 +65,7 @@ define Package/knockd/description
 endef
 
 define Package/knockd/conffiles
+/opt/etc/config/knockd-env.conf
 /opt/etc/knockd.conf
 endef
 
@@ -80,6 +83,8 @@ define Package/knock/install
 endef
 
 define Package/knockd/install
+	$(INSTALL_DIR) $(1)/opt/etc/config
+	$(INSTALL_CONF) ./files/knockd-env.conf $(1)/opt/etc/config
 	$(INSTALL_DIR) $(1)/opt/etc/init.d
 	$(INSTALL_BIN) ./files/S05knockd $(1)/opt/etc/init.d
 	$(INSTALL_CONF) $(PKG_INSTALL_DIR)/opt/etc/knockd.conf $(1)/opt/etc

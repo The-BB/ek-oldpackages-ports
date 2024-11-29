@@ -2,10 +2,17 @@
 
 ENABLED=yes
 
-DESC="Port-knocking"
+DESC="Port-knocking daemon"
 PROCS="knockd"
 PROG="/opt/sbin/$PROCS"
 
+{ [ -f "/opt/etc/config/$PROCS-env.conf" ] && . /opt/etc/config/"$PROCS"-env.conf && \
+  if [ -z "$(grep ^INTERFACE /opt/etc/config/$PROCS-env.conf | cut -d\" -f2)" ]; then \
+    printf "\033[1;31m %s \033[0m\n" "Info: network interface to listen on (default \"eth0\")."; \
+  fi ; } || \
+{ printf "\033[1;31m %s \033[0m\n" "Abort: conf file not found." && exit 1 ; }
+
+INTERFACE="${INTERFACE:-eth0}"
 PID_FILE="/opt/var/run/$PROCS.pid"
 
 pre_cmd() {
@@ -13,7 +20,7 @@ pre_cmd() {
 }
 
 PRECMD="pre_cmd"
-ARGS="-d -v"
+ARGS="-i $INTERFACE -d -p $PID_FILE"
 PREARGS=""
 
 . /opt/etc/init.d/rc.func
