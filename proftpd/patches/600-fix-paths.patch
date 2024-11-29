@@ -60,7 +60,7 @@
    }
 --- a/src/main.c
 +++ b/src/main.c
-@@ -2050,7 +2050,7 @@ static struct option opts[] = {
+@@ -2076,7 +2076,7 @@ static struct option opts[] = {
   *   https://www.freedesktop.org/software/systemd/man/os-release.html
   */
  static void show_os_release(void) {
@@ -82,7 +82,7 @@
  
 --- a/configure.in
 +++ b/configure.in
-@@ -4193,9 +4193,9 @@ locale_dir="`eval echo ${localedir}`"
+@@ -4231,9 +4231,9 @@ locale_dir="`eval echo ${localedir}`"
  locale_dir="`eval echo ${locale_dir}`"
  AC_DEFINE_UNQUOTED(PR_LOCALE_DIR, "`eval echo "${locale_dir}"`", [Define the locale directory])
  

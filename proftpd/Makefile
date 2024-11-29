@@ -8,12 +8,15 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=proftpd
-PKG_VERSION:=1.3.8
-PKG_RELEASE:=2
+PKG_VERSION:=1.3.8b
+PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
-PKG_SOURCE_URL:=ftp://ftp.proftpd.org/distrib/source
-PKG_HASH:=f7139e7377a2cb059b8b9b14d76a6df5f440e3181cb15ae890d43bbcae574748
+PKG_SOURCE_URL:=https://codeload.github.com/proftpd/proftpd/tar.gz/refs/tags/v$(PKG_VERSION)?
+PKG_HASH:=183ab7c6107de271a2959ff268f55c9b6c76b2cf0029e6584fccc019686601e0
+
+PKG_LICENSE:=GPL-2.0-only
+PKG_LICENSE_FILES:=COPYING
 
 PKG_FIXUP:=autoreconf
 PKG_INSTALL:=1
