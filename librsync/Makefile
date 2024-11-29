@@ -12,9 +12,12 @@ PKG_VERSION:=2.3.4
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=e364852674780e43d578e4239128ff7014190ed3
-PKG_SOURCE_URL:=https://github.com/librsync/librsync.git
+PKG_SOURCE_VERSION:=v$(PKG_VERSION)
+PKG_SOURCE_URL:=https://github.com/librsync/librsync
 PKG_MIRROR_HASH:=a5acd088805e5c528c072476b1728b78d4fcf618141a6beb480e046e843dd595
+
+PKG_LICENSE:=LGPL-2.1-only
+PKG_LICENSE_FILES:=COPYING
 
 CMAKE_INSTALL:=1
 
@@ -24,16 +27,16 @@ include $(INCLUDE_DIR)/cmake.mk
 define Package/librsync
   SECTION:=libs
   CATEGORY:=Libraries
-  TITLE:=implementation of the rolling-checksum algorithm
+  TITLE:=remote delta-compression library
+  URL:=https://librsync.github.io/
   DEPENDS:=+libbz2 +zlib
-  URL:=http://librsync.sourceforge.net/
 endef
 
 define Package/librsync/description
-	librsync implements the rolling-checksum algorithm of remote file
-	synchronization that was popularized by the rsync utility and is
-	used in rproxy. This algorithm transfers the differences between 2
-	files without needing both files on the same system.
+  librsync implements the "rsync" algorithm, which allows remote
+  differencing of binary files.  librsync computes a delta relative to a
+  file's checksum, so the two files need not both be present to generate
+  a delta.
 endef
 
 define Package/librsync/install
