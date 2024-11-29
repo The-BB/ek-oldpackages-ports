@@ -14,6 +14,9 @@ PKG_RELEASE:=1
 PYPI_NAME:=pyxdg
 PKG_HASH:=3267bb3074e934df202af2ee0868575484108581e6f3cb006af1da35395e88b4
 
+PKG_LICENSE:=LGPL-2.0-only
+PKG_LICENSE_FILES:=COPYING
+
 include $(TOPDIR)/feeds/packages/lang/python/pypi.mk
 include $(INCLUDE_DIR)/package.mk
 include $(TOPDIR)/feeds/packages/lang/python/python3-package.mk
@@ -27,7 +30,7 @@ define Package/python3-pyxdg
   DEPENDS:=+python3
 endef
 
-define Package/python-pyxdg/description
+define Package/python3-pyxdg/description
   A Python module to deal with freedesktop.org specifications.
 endef
 
