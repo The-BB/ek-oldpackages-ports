@@ -12,11 +12,12 @@ PKG_VERSION:=2.19
 PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
-PKG_SOURCE_URL:=http://www.litech.org/radvd/dist
+PKG_SOURCE_URL:=https://radvd.litech.org/dist
 PKG_HASH:=c36470706fec3a9e6bed394ffea08acaff5dac647848d26b96bb9b9c65d58da0
 
 PKG_MAINTAINER:=QshenX <q@xd8.cn>
-PKG_LICENSE:=GPL-2.0
+PKG_LICENSE:=Inner-Net-2.0
+PKG_LICENSE_FILES:=COPYRIGHT
 
 PKG_INSTALL:=1
 
@@ -26,7 +27,7 @@ define Package/radvd/Default
   SECTION:=net
   CATEGORY:=Network
   TITLE:=IPv6 Routing Advertisement
-  URL:=http://v6web.litech.org/radvd/
+  URL:=https://radvd.litech.org/
   DEPENDS:=+libdaemon
 endef
 
