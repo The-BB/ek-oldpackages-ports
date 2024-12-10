@@ -9,7 +9,7 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=rdiff-backup
 PKG_VERSION:=2.2.6
-PKG_RELEASE:=1
+PKG_RELEASE:=2
 
 PYPI_NAME:=rdiff-backup
 PKG_HASH:=d0778357266bc6513bb7f75a4570b29b24b2760348bbf607babfc3a6f09458cf
@@ -39,6 +39,14 @@ define Package/python3-rdiff-backup/description
   target directory, so you can still recover files lost some time ago.
   The idea is to combine the best features of a mirror and an incremental
   backup.
+endef
+
+define Package/python3-rdiff-backup/postrm
+#!/bin/sh
+
+rm -rf $(PYTHON3_PKG_DIR)/$(PYPI_NAME)
+rm -rf $(PYTHON3_PKG_DIR)/$(PYPI_NAME)-$(PKG_VERSION).dist-info
+rm -rf $(PYTHON3_PKG_DIR)/rdiffbackup
 endef
 
 $(eval $(call Py3Package,python3-rdiff-backup))
