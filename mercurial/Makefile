@@ -52,6 +52,16 @@ define Build/Prepare
 	$(TAR) -xf $(DL_DIR)/$(PZSTD_FILE) --strip-components=1 -C $(PKG_BUILD_DIR)/contrib/python-zstandard
 endef
 
+define Package/mercurial/postrm
+#!/bin/sh
+
+rm -rf $(PYTHON3_PKG_DIR)/hgdemandimport
+rm -rf $(PYTHON3_PKG_DIR)/hgext
+rm -rf $(PYTHON3_PKG_DIR)/hgext3rd
+rm -rf $(PYTHON3_PKG_DIR)/$(PYPI_NAME)
+rm -rf $(PYTHON3_PKG_DIR)/$(PYPI_NAME)-$(PKG_VERSION).dist-info
+endef
+
 $(eval $(call Download,pzstd))
 $(eval $(call Py3Package,mercurial))
 $(eval $(call BuildPackage,mercurial))
