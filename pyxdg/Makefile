@@ -9,7 +9,7 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=pyxdg
 PKG_VERSION:=0.28
-PKG_RELEASE:=1
+PKG_RELEASE:=2
 
 PYPI_NAME:=pyxdg
 PKG_HASH:=3267bb3074e934df202af2ee0868575484108581e6f3cb006af1da35395e88b4
@@ -32,6 +32,13 @@ endef
 
 define Package/python3-pyxdg/description
   A Python module to deal with freedesktop.org specifications.
+endef
+
+define Package/python3-pyxdg/postrm
+#!/bin/sh
+
+rm -rf $(PYTHON3_PKG_DIR)/xdg
+rm -rf $(PYTHON3_PKG_DIR)/$(PYPI_NAME)-$(PKG_VERSION).dist-info
 endef
 
 $(eval $(call Py3Package,python3-pyxdg))
