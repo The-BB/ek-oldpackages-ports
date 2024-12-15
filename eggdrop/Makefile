@@ -19,8 +19,16 @@ PKG_MIRROR_HASH:=5badba156c7b95d3fceec96eba5dda397bad0d9f02fa93052d28e154cc7a6dd
 PKG_LICENSE:=GPL-2.0-only
 PKG_LICENSE_FILES:=COPYING
 
+PKG_FIXUP:=autoreconf
 PKG_INSTALL:=1
 PKG_BUILD_PARALLEL:=1
+
+PKG_AUTOMAKE_PATHS:=. src/mod/compress.mod src/mod/dns.mod src/mod/python.mod
+
+PKG_REMOVE_FILES:= \
+	src/mod/compress.mod/configure \
+	src/mod/dns.mod/configure \
+	src/mod/python.mod/configure
 
 include $(INCLUDE_DIR)/package.mk
 
