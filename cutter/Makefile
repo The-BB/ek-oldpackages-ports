@@ -12,10 +12,6 @@ PKG_NAME:=cutter
 PKG_VERSION:=1.04
 PKG_RELEASE:=2
 
-PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tgz
-PKG_SOURCE_URL:=http://www.digitage.co.uk/digitage/files/cutter
-PKG_HASH:=1b336c69eb3393f6ca118a529773014c41126ac6dabd04b77151daa1c2f01180
-
 include $(INCLUDE_DIR)/package.mk
 
 define Package/cutter
@@ -29,10 +25,6 @@ define Package/cutter/description
 	Cutter is an open source program that allows Linux firewall
 	administrators to abort TCP/IP connections routed over the
 	firewall or router on which it is run.
-endef
-
-define Build/Compile
-	$(TARGET_CC) $(TARGET_CFLAGS) $(TARGET_LDFLAGS) $(PKG_BUILD_DIR)/cutter.c -o $(PKG_BUILD_DIR)/cutter
 endef
 
 define Package/cutter/install
