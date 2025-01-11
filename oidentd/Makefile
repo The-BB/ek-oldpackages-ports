@@ -13,7 +13,7 @@ PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_VERSION:=44030f6e4a4b00fe8bf62c3b128309bb9542c744
-PKG_SOURCE_URL:=https://github.com/janikrabe/oidentd.git
+PKG_SOURCE_URL:=https://github.com/janikrabe/oidentd
 PKG_MIRROR_HASH:=6394809bfa3f222e28485915030b4f9fac30c2df9ea20023ee58dc046b471b5f
 
 PKG_FIXUP:=autoreconf
