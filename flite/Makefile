@@ -13,7 +13,7 @@ PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_VERSION:=e9e2e37c329dbe98bfeb27a1828ef9a71fa84f88
-PKG_SOURCE_URL:=https://github.com/festvox/flite.git
+PKG_SOURCE_URL:=https://github.com/festvox/flite
 PKG_MIRROR_HASH:=ecf4ce3fd725948baaf3c7e71cc56dd713c44625c9684f6adb6425b93af21a11
 
 PKG_INSTALL:=1
