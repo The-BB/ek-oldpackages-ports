@@ -42,10 +42,8 @@ MESON_ARGS += \
 	-Dterminfo=true \
 	-Dtre=false \
 	-Dxterm=true \
-	-Dzstd=true
-
-# XXX new meson?
-MESON_ARGS += -Dftp=false
+	-Dzstd=true \
+	-Dftp=false
 
 TARGET_LDFLAGS += $(if $(ICONV_FULL),-liconv)
 
