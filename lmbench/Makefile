@@ -8,13 +8,15 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=lmbench
-PKG_VERSION:=3_alpha4
+PKG_REAL_VERSION:=3-4
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_VERSION:=701c6c35b0270d4634fb1dc5272721340322b8ed
-PKG_SOURCE_URL:=https://github.com/intel/lmbench.git
+PKG_SOURCE_URL:=https://github.com/intel/lmbench
 PKG_MIRROR_HASH:=a2359e0b760e6319394652b4d0a7548a39da6816a3683fe36304ee309dcc7eb1
+
+PKG_VERSION:=$(subst -,_alpha,$(PKG_REAL_VERSION))
 
 include $(INCLUDE_DIR)/package.mk
 
