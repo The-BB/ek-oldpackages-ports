@@ -14,7 +14,7 @@ PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_VERSION:=7acac922770597f5da5df7b290078770d20dac32
-PKG_SOURCE_URL:=https://github.com/crigler/dtach.git
+PKG_SOURCE_URL:=https://github.com/crigler/dtach
 PKG_MIRROR_HASH:=fcb954b220ab5812b475b53374a1efbca096571e171272a29e351351cff009ce
 
 include $(INCLUDE_DIR)/package.mk
