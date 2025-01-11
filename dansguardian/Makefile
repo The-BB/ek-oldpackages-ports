@@ -19,7 +19,6 @@ PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
 PKG_SOURCE_URL:=@SF/dansguardian
 PKG_HASH:=c74e9a32b97f9a9a056fced3da23fe48fca2bc6aa9af670afe9a53dc819414f5
 
-PKG_BUILD_PARALLEL:=1
 PKG_INSTALL:=1
 
 include $(INCLUDE_DIR)/package.mk
