@@ -14,7 +14,7 @@ PKG_RELEASE:=3
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_VERSION:=351ac491358f89a7860bbbe9963cb4bc7d60000f
-PKG_SOURCE_URL:=https://github.com/jpr5/ngrep.git
+PKG_SOURCE_URL:=https://github.com/jpr5/ngrep
 PKG_MIRROR_HASH:=557472a823ad3c7eb77ed7a2a143df4552e19b9dee59d193f6e7cdd10d4cd55b
 
 PKG_FIXUP:=autoreconf
