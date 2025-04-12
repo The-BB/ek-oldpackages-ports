@@ -8,13 +8,13 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=upx
-PKG_VERSION:=4.2.4
+PKG_VERSION:=5.0.0
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_VERSION:=v$(PKG_VERSION)
 PKG_SOURCE_URL:=https://github.com/upx/upx
-PKG_MIRROR_HASH:=351f83879d0a65a25e0eb1b0761bbc5fad9c521601e4b05e7006b394da9bb8b0
+PKG_MIRROR_HASH:=8ab163d072227f92d7e5e1d2aefcf652b754b67abdabf2707e91c84f12bf5d83
 
 PKG_LICENSE:=GPL-2.0-only
 PKG_LICENSE_FILES:=COPYING LICENSE
@@ -39,6 +39,8 @@ define Package/upx/description
   no memory overhead or other drawbacks for most of the formats supported,
   because of in-place decompression.
 endef
+
+CMAKE_BINARY_SUBDIR:=openwrt-build
 
 TARGET_CXXFLAGS += -DUCL_NO_ASM
 TARGET_LDFLAGS += $(if $(CONFIG_GCC_LIBSSP),-lssp)
