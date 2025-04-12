@@ -8,13 +8,13 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=ipv6calc
-PKG_VERSION:=4.2.1
+PKG_VERSION:=4.3.0
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_VERSION:=$(PKG_VERSION)
 PKG_SOURCE_URL:=https://github.com/pbiering/ipv6calc
-PKG_MIRROR_HASH:=654153395f32f374fc66a4fa150ecb7446ceb33ecac2100620cf0761e1254660
+PKG_MIRROR_HASH:=724f613e4b5abf60b57a1d9ce9281a19432141351c03107d822392ae3a5ac2ae
 
 PKG_LICENSE:=GPL-2.0-only
 PKG_LICENSE_FILES:=COPYING LICENSE
@@ -64,6 +64,7 @@ CONFIGURE_ARGS += \
 	--with-dbip-db=/opt/share/DBIP \
 	--with-external-db=/opt/share/ipv6calc/db \
 	--with-ip2location-db=/opt/share/IP2Location \
+	--with-ip2location2-db=/opt/share/IP2Location \
 	--with-geoip-db=/opt/share/GeoIP \
 	--enable-bundled-md5 \
 	--enable-bundled-getopt
