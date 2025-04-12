@@ -8,12 +8,15 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=rsnapshot
-PKG_VERSION:=1.4.5
+PKG_VERSION:=1.5.1
 PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
-PKG_SOURCE_URL:=https://github.com/rsnapshot/rsnapshot/releases/download/$(PKG_VERSION)
-PKG_HASH:=10b75e01ca25511e8266aacd495531975ad1a8ad556216b6a57c76d028b38242
+PKG_SOURCE_URL:=https://codeload.github.com/rsnapshot/rsnapshot/tar.gz/refs/tags/$(PKG_VERSION)?
+PKG_HASH:=88d2b53d0807d6c7f9a803fc19f5a64fcb028d9dad6a880ca9941a1d5e730742
+
+PKG_LICENSE:=GPL-2.0-only
+PKG_LICENSE_FILES:=COPYING
 
 PKG_INSTALL:=1
 PKG_BUILD_PARALLEL:=1
@@ -25,7 +28,7 @@ define Package/rsnapshot
   SECTION:=utils
   CATEGORY:=Utilities
   TITLE:=rsnapshot Backup
-  URL:=http://www.rsnapshot.org/
+  URL:=https://rsnapshot.org/
   DEPENDS:=+rsync +perl \
 		+perlbase-autoloader \
 		+perlbase-class \
@@ -55,6 +58,10 @@ define Package/rsnapshot/description
   space of one full backup, plus incrementals.
 endef
 
+define Package/rsnapshot/conffiles
+/opt/etc/$(PKG_NAME).conf
+endef
+
 CONFIGURE_ARGS += \
 	--without-logger
 
@@ -67,24 +74,19 @@ CONFIGURE_VARS += \
 	ac_cv_path_SSH=/opt/bin/ssh
 
 define Build/Configure
+	( cd $(PKG_BUILD_DIR); ./autogen.sh; )
 	$(call Build/Configure/Default)
-	touch $(PKG_BUILD_DIR)/rsnapshot.{1,html}
-	touch $(PKG_BUILD_DIR)/rsnapshot-diff.1
 endef
 
 define Package/rsnapshot/install
 	$(INSTALL_DIR) $(1)/opt/bin
 	$(INSTALL_BIN) \
-	    $(PKG_INSTALL_DIR)/opt/bin/$(PKG_NAME){,-diff} \
-	    $(1)/opt/bin
+		$(PKG_INSTALL_DIR)/opt/bin/$(PKG_NAME){,-diff} \
+			$(1)/opt/bin
 	$(INSTALL_DIR) $(1)/opt/etc
 	$(INSTALL_DATA) \
-	    $(PKG_INSTALL_DIR)/opt/etc/$(PKG_NAME).conf.default \
-	    $(1)/opt/etc/$(PKG_NAME).conf
-endef
-
-define Package/rsnapshot/conffiles
-/opt/etc/$(PKG_NAME).conf
+		$(PKG_INSTALL_DIR)/opt/etc/$(PKG_NAME).conf.default \
+			$(1)/opt/etc/$(PKG_NAME).conf
 endef
 
 $(eval $(call BuildPackage,rsnapshot))
