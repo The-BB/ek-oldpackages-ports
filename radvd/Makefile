@@ -8,12 +8,12 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=radvd
-PKG_VERSION:=2.19
+PKG_VERSION:=2.20
 PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://radvd.litech.org/dist
-PKG_HASH:=c36470706fec3a9e6bed394ffea08acaff5dac647848d26b96bb9b9c65d58da0
+PKG_HASH:=af37c5a81d59f3bdc00d83056606ffa1810d4550beed6caa4f81181246494220
 
 PKG_MAINTAINER:=QshenX <q@xd8.cn>
 PKG_LICENSE:=Inner-Net-2.0
@@ -28,7 +28,7 @@ define Package/radvd/Default
   CATEGORY:=Network
   TITLE:=IPv6 Routing Advertisement
   URL:=https://radvd.litech.org/
-  DEPENDS:=+libdaemon
+  DEPENDS:=+libdaemon +USE_GLIBC:libbsd
 endef
 
 define Package/radvd
