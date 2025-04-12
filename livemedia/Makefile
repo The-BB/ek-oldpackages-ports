@@ -8,13 +8,13 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=livemedia
-PKG_VERSION:=2024.11.28
+PKG_VERSION:=2025.01.17
 PKG_RELEASE:=1
 
 PKG_SOURCE:=live.$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=http://www.live555.com/liveMedia/public \
 		https://download.videolan.org/pub/contrib/live555
-PKG_HASH:=a9af16f46d2f4c7ccdbfc4b617480503d27cccb46fa5abb7dfd8a25951b44cc3
+PKG_HASH:=273d9cf77468015c2377e50e384e3eea67cf255c75fe60a175e9e0917afe847b
 
 PKG_LICENSE:=GPL-3.0-or-later LGPL-3.0-or-later
 PKG_LICENSE_FILES:=COPYING COPYING.LESSER
@@ -83,11 +83,9 @@ endef
 define Build/Configure
 	$(FIND) $(PKG_BUILD_DIR) -name "Makefile.*" -exec \
 		$(SED) 's|PREFIX =.*$$$$|PREFIX = /opt|g' {} \;
-	( cd $(PKG_BUILD_DIR); \
-		$(SED) 's|@CROSS_COMPILE@|$(TARGET_CROSS)|g;  \
-			s|@CFLAGS@|$(TARGET_CFLAGS)|g' config.Entware; \
-		./genMakefiles Entware; \
-	)
+	$(SED) 's|@CROSS_COMPILE@|$(TARGET_CROSS)|g;  \
+		s|@CFLAGS@|$(TARGET_CFLAGS)|g' $(PKG_BUILD_DIR)/config.Entware
+	( cd $(PKG_BUILD_DIR); ./genMakefiles Entware; )
 endef
 
 define Package/liblive555/install

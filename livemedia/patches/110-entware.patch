@@ -2,14 +2,14 @@ NB! sync with config.linux-with-shared-libraries after bump ver.
 
 --- /dev/null
 +++ b/config.Entware
-@@ -0,0 +1,48 @@
+@@ -0,0 +1,47 @@
 +# 'CURRENT':'REVISION':'AGE' are updated - whenever a library changes - as follows:
 +# The library code changes, but without any changes to the API (i.e., interfaces) => increment REVISION
 +# At least one interface changes, or is removed => CURRENT += 1; REVISION = 0; AGE = 0
 +# One or more interfaces were added, but no existing interfaces were changed or removed => CURRENT += 1; REVISION = 0; AGE += 1
 +
 +libliveMedia_VERSION_CURRENT=116
-+libliveMedia_VERSION_REVISION=0
++libliveMedia_VERSION_REVISION=1
 +libliveMedia_VERSION_AGE=0
 +libliveMedia_LIB_SUFFIX=so.$(shell expr $(libliveMedia_VERSION_CURRENT) - $(libliveMedia_VERSION_AGE)).$(libliveMedia_VERSION_AGE).$(libliveMedia_VERSION_REVISION)
 +
@@ -30,24 +30,23 @@ NB! sync with config.linux-with-shared-libraries after bump ver.
 +#####
 +
 +CROSS_COMPILE =		@CROSS_COMPILE@
-+COMPILE_OPTS =		$(INCLUDES) -I. @CFLAGS@ -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -DLOCALE_NOT_USED -fPIC
++COMPILE_OPTS =		$(INCLUDES) -I. @CFLAGS@ -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64 -fPIC
 +C =			c
 +C_COMPILER =		$(CROSS_COMPILE)gcc
-+CFLAGS +=		$(COMPILE_OPTS)
-+C_FLAGS =		$(CFLAGS)
++C_FLAGS =		$(COMPILE_OPTS) $(CPPFLAGS) $(CFLAGS)
 +CPP =			cpp
 +CPLUSPLUS_COMPILER =	$(CROSS_COMPILE)g++
-+CPLUSPLUS_FLAGS =	$(COMPILE_OPTS) -Wall -DBSD=1
-+CPLUSPLUS_FLAGS +=	$(CPPFLAGS) -fexceptions
++CPLUSPLUS_FLAGS =	$(COMPILE_OPTS) -Wall -DBSD=1 $(CPPFLAGS) $(CXXFLAGS)
 +OBJ =			o
 +LINK =			$(CROSS_COMPILE)g++ -o
 +LINK_OPTS =		-L. $(LDFLAGS)
 +CONSOLE_LINK_OPTS =	$(LINK_OPTS)
 +LIBRARY_LINK =		$(CROSS_COMPILE)gcc -o 
 +SHORT_LIB_SUFFIX =	so.$(shell expr $($(NAME)_VERSION_CURRENT) - $($(NAME)_VERSION_AGE))
-+LIB_SUFFIX =		$(SHORT_LIB_SUFFIX).$($(NAME)_VERSION_AGE).$($(NAME)_VERSION_REVISION)
++LIB_SUFFIX =	 	$(SHORT_LIB_SUFFIX).$($(NAME)_VERSION_AGE).$($(NAME)_VERSION_REVISION)
 +LIBRARY_LINK_OPTS =	-shared -Wl,-soname,$(NAME).$(SHORT_LIB_SUFFIX) $(LDFLAGS)
-+LIBS_FOR_CONSOLE_APPLICATION =	$(CXXLIBS)
-+LIBS_FOR_GUI_APPLICATION =	$(LIBS_FOR_CONSOLE_APPLICATION)
++LIBS_FOR_CONSOLE_APPLICATION =
++LIBS_FOR_GUI_APPLICATION =
++LIBS_FOR_LIVEMEDIA_LIB =
 +EXE =
-+INSTALL2 =			install_shared_libraries
++INSTALL2 =		install_shared_libraries
