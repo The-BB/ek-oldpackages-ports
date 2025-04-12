@@ -8,16 +8,16 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=mercurial
-PKG_VERSION:=6.9
+PKG_VERSION:=7.0.1
 PKG_RELEASE:=1
 
 PYPI_NAME:=$(PKG_NAME)
-PKG_HASH:=629604293df2be8171ec856bf4f8b4faa8e4305af13607dce0f89f74132836d6
+PKG_HASH:=0f4cde42ec6c15f7ff93d421e7a842fdb30ee7951b1dbc4aacaac06eac764b48
 
 PKG_LICENSE:=GPL-2.0-or-later
 PKG_LICENSE_FILES:=COPYING
 
-PKG_BUILD_DEPENDS:=zstd python-wheel/host
+PKG_BUILD_DEPENDS:=zstd python-setuptools-scm/host python-wheel/host
 
 include $(TOPDIR)/feeds/packages/lang/python/pypi.mk
 include $(INCLUDE_DIR)/package.mk
