@@ -1,0 +1,60 @@
+--- a/src/network/ssl/ssl.c
++++ b/src/network/ssl/ssl.c
+@@ -360,7 +360,7 @@ static union option_info gnutls_options[
+ #ifdef HAVE_GNUTLS_CERTIFICATE_SET_X509_SYSTEM_TRUST
+ 		"",
+ #else
+-		"/etc/ssl/certs/ca-certificates.crt",
++		"/opt/etc/ssl/certs/ca-certificates.crt",
+ #endif
+ 		N_("The location of a file containing certificates of "
+ 		"trusted certification authorities in PEM format. "
+--- a/src/protocol/rewrite/rewrite.c
++++ b/src/protocol/rewrite/rewrite.c
+@@ -127,7 +127,7 @@ static union option_info uri_rewrite_opt
+ 	INIT_OPT_DUMB_PREFIX("sf", "https://sourceforge.net"),
+ 	INIT_OPT_DUMB_PREFIX("dbug", "https://www.debian.org/Bugs/"),
+ 	INIT_OPT_DUMB_PREFIX("dpkg", "https://www.debian.org/distrib/packages"),
+-	INIT_OPT_DUMB_PREFIX("lua", "file:///usr/share/doc/lua/contents.html#index"),
++	INIT_OPT_DUMB_PREFIX("lua", "file:///opt/share/doc/lua/contents.html#index"),
+ 	INIT_OPT_DUMB_PREFIX("pycur", "https://www.python.org/doc/"),
+ 	INIT_OPT_DUMB_PREFIX("pydev", "https://docs.python.org/dev/"),
+ 	INIT_OPT_DUMB_PREFIX("e2", "https://www.everything2.org"),
+--- a/src/session/download.c
++++ b/src/session/download.c
+@@ -431,7 +431,7 @@ exec_mailcap_command(void *data)
+ 				add_to_string(&string, "mailcap:");
+ 				add_to_string(&string, exec_mailcap->command);
+ 				if (exec_mailcap->file) {
+-					add_to_string(&string, " && /bin/rm -f ");
++					add_to_string(&string, " && rm -f ");
+ 					add_to_string(&string, exec_mailcap->file);
+ 				}
+ 
+@@ -1218,7 +1218,7 @@ subst_file(char *prog, char *file, char
+ 		struct string s;
+ 
+ 		if (init_string(&s)) {
+-			add_to_string(&s, "/bin/cat ");
++			add_to_string(&s, "cat ");
+ 			add_shell_quoted_to_string(&s, file, strlen(file));
+ 			add_to_string(&s, " | ");
+ 			add_string_to_string(&s, &name);
+--- a/src/setup.h
++++ b/src/setup.h
+@@ -90,11 +90,11 @@
+ 
+ /* Default mime settings */
+ #define DEFAULT_MIME_TYPE		"application/octet-stream"
+-#define DEFAULT_PAGER_PATH		"/usr/bin/pager"
+-#define DEFAULT_LESS_PATH		"/usr/bin/less"
+-#define DEFAULT_MORE_PATH		"/usr/bin/more"
++#define DEFAULT_PAGER_PATH		"/opt/bin/pager"
++#define DEFAULT_LESS_PATH		"/opt/bin/less"
++#define DEFAULT_MORE_PATH		"/opt/bin/more"
+ #define DEFAULT_MAILCAP_PATH		"~/.mailcap:/etc/mailcap:/usr/etc/mailcap:/usr/local/etc/mailcap:/usr/share/mailcap:/usr/share/misc/mailcap"
+-#define DEFAULT_MIMETYPES_PATH		"~/.mime.types:/etc/mime.types:/usr/etc/mime.types:/usr/local/etc/mime.types:/usr/share/mime.types:/usr/share/misc/mime.types"
++#define DEFAULT_MIMETYPES_PATH		"~/.mime.types:/opt/etc/mime.types:/opt/share/mime.types:/opt/share/misc/mime.types:/etc/mime.types:/usr/etc/mime.types:/usr/local/etc/mime.types:/usr/share/mime.types:/usr/share/misc/mime.types"
+ 
+ /* Default external commands (see osdep/newwin.c and/or system-specific osdep/
+  * files) */
