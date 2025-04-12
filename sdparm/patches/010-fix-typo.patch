@@ -1,0 +1,31 @@
+../lib/sg_pt_linux_nvme.c: In function 'do_nvm_pt':
+../lib/sg_pt_linux_nvme.c:1931:1: error: expected declaration or statement at end of input
+ }
+ ^
+../lib/sg_pt_linux_nvme.c:1911:68: warning: unused parameter 'verbose' [-Wunused-parameter]
+ do_nvm_pt(struct sg_pt_base * vp, int submq, int timeout_secs, int verbose)
+                                                                ~~~~^~~~~~~
+../lib/sg_pt_linux_nvme.c:1931:1: warning: control reaches end of non-void function [-Wreturn-type]
+ }
+ ^
+---
+
+--- a/lib/sg_pt_linux_nvme.c
++++ b/lib/sg_pt_linux_nvme.c
+@@ -1908,7 +1908,7 @@ do_nvm_pt(struct sg_pt_base * vp, int su
+ #else           /* (HAVE_NVME && (! IGNORE_NVME)) */
+ 
+ int
+-do_nvm_pt(struct sg_pt_base * vp, int submq, int timeout_secs, int verbose)
++do_nvm_pt(struct sg_pt_base * vp, int submq, int timeout_secs, int vb)
+ {
+     if (vb) {
+         pr2ws("%s: not supported, ", __func__);
+@@ -1926,6 +1926,7 @@ do_nvm_pt(struct sg_pt_base * vp, int su
+     if (vp) { }
+     if (submq) { }
+     if (timeout_secs) { }
++    }
+     return SCSI_PT_DO_NOT_SUPPORTED;
+ }
+ 
