@@ -6,12 +6,12 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=pugixml
-PKG_VERSION:=1.14
+PKG_VERSION:=1.15
 PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
-PKG_SOURCE_URL:=https://github.com/zeux/pugixml/releases/download/v$(PKG_VERSION)
-PKG_HASH:=2f10e276870c64b1db6809050a75e11a897a8d7456c4be5c6b2e35a11168a015
+PKG_SOURCE_URL:=https://codeload.github.com/zeux/pugixml/tar.gz/refs/tags/v$(PKG_VERSION)?
+PKG_HASH:=b39647064d9e28297a34278bfb897092bf33b7c487906ddfc094c9e8868bddcb
 
 PKG_MAINTAINER:=
 PKG_LICENSE:=MIT
@@ -25,8 +25,8 @@ include $(INCLUDE_DIR)/cmake.mk
 define Package/pugixml
   SECTION:=libs
   CATEGORY:=Libraries
-  TITLE:=pugixml
-  URL:=https://github.com/zeux/pugixml
+  TITLE:=an XML processing library
+  URL:=https://pugixml.org
   DEPENDS:=+libstdcpp
   BUILDONLY:=1
 endef
