@@ -9,12 +9,12 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=weechat
-PKG_VERSION:=4.4.3
+PKG_VERSION:=4.6.1
 PKG_RELEASE:=1
 
-PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.xz
+PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://weechat.org/files/src
-PKG_HASH:=295612f8dc24af28c918257d3014eb53342a5d077d5e3d9a3eadf303bd8febfa
+PKG_HASH:=1d3c77cc9d499e4291435549b25310e7fc59c123a39afdedef4da6b2909d8329
 
 PKG_LICENSE:=GPL-3.0-only
 PKG_LICENSE_FILES:=COPYING
@@ -28,13 +28,13 @@ include $(TOPDIR)/feeds/packages/lang/perl/perlver.mk
 include $(TOPDIR)/feeds/packages/lang/python/python3-version.mk
 
 define Package/weechat
-	SUBMENU:=Instant Messaging
-	SECTION:=net
-	CATEGORY:=Network
-	TITLE:=Lightweight IRC client
-	URL:=https://weechat.org/
-	DEPENDS:=+libcurl +libgnutls +libgcrypt +libaspell +libncursesw +libzstd \
-		$(ICONV_DEPENDS) $(INTL_DEPENDS)
+  SUBMENU:=Instant Messaging
+  SECTION:=net
+  CATEGORY:=Network
+  TITLE:=Lightweight IRC client
+  URL:=https://weechat.org/
+  DEPENDS:=+libaspell +libcurl +libgcrypt +libgnutls +libncursesw +libzstd +zlib \
+	$(ICONV_DEPENDS) $(INTL_DEPENDS)
 endef
 
 define Package/weechat/description
@@ -43,6 +43,7 @@ endef
 
 TARGET_LDFLAGS += $(if $(ICONV_FULL),-liconv)
 TARGET_LDFLAGS += $(if $(INTL_FULL),-lintl)
+TARGET_LDFLAGS += $(if $(CONFIG_USE_GLIBC),-ldl)
 
 CMAKE_OPTIONS += \
 	-DWEECHAT_HOME="/opt/var/weechat" \
@@ -61,11 +62,11 @@ CMAKE_OPTIONS += \
 	-DENABLE_RUBY=OFF \
 	-DENABLE_TCL=OFF
 
-define FixPerlVersion
+define Build/Prepare
+	$(call Build/Prepare/Default)
 	$(SED) 's,@PERL_VERSION2@,$(PERL_VERSION2),' \
 		$(PKG_BUILD_DIR)/src/plugins/perl/CMakeLists.txt
 endef
-Hooks/Configure/Pre += FixPerlVersion
 
 define CheckDependencies
 endef
