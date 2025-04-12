@@ -8,14 +8,17 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=ncftp
-PKG_VERSION:=3.2.7
+PKG_VERSION:=3.2.9
 PKG_RELEASE:=1
-
-PKG_INSTALL:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-src.tar.gz
 PKG_SOURCE_URL:=https://www.ncftp.com/public_ftp/ncftp
-PKG_HASH:=dbde0d3b4d28ba3a445621e10deaee57a6ba3ced277cc9dbce4052bcddf6cb2a
+PKG_HASH:=1d79348dd78e148f6a2491c9dab37d554d5fbce3a3b2bc2edd71b06d54ef97c1
+
+PKG_LICENSE:=ClArtistic
+PKG_LICENSE_FILES:=doc/LICENSE.txt
+
+PKG_INSTALL:=1
 
 include $(INCLUDE_DIR)/package.mk
 
