@@ -47,6 +47,10 @@ endef
 
 TARGET_CFLAGS += -pthread -I$(STAGING_DIR)/opt/include
 
+ifeq ($(CONFIG_GCC_USE_VERSION_14),y)
+TARGET_CFLAGS += -std=gnu89
+endif
+
 define Package/streamripper/install
 	$(INSTALL_DIR) $(1)/opt/bin
 	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/opt/bin/streamripper $(1)/opt/bin
