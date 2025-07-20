@@ -31,6 +31,10 @@ define Package/nagios/description
 	service and network monitoring program
 endef
 
+ifeq ($(CONFIG_GCC_USE_VERSION_14),y)
+TARGET_CFLAGS += -D_GNU_SOURCE -std=gnu89
+endif
+
 EXTRA_CFLAGS += $(TARGET_CPPFLAGS)
 
 CONFIGURE_VARS += \
