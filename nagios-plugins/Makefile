@@ -29,6 +29,10 @@ define Package/nagios-plugins
   URL:=http://nagiosplug.sourceforge.net/
 endef
 
+ifeq ($(CONFIG_GCC_USE_VERSION_14),y)
+TARGET_CFLAGS += -std=gnu89
+endif
+
 CONFIGURE_ARGS += \
 	--with-trusted-path="/opt/bin:/opt/sbin:/opt/usr/bin:/opt/usr/sbin" \
 	--with-perl="/opt/bin/perl" \
