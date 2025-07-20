@@ -67,6 +67,10 @@ CONFIGURE_VARS += \
 
 TARGET_CFLAGS += -DHAVE_WORKING_FORK
 
+ifeq ($(CONFIG_GCC_USE_VERSION_14),y)
+TARGET_CFLAGS += -std=gnu89
+endif
+
 define Build/Compile
 	$(call Build/Compile/Default,vtund)
 endef
