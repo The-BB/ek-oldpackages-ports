@@ -49,6 +49,10 @@ choice
 endchoice
 endef
 
+ifeq ($(CONFIG_GCC_USE_VERSION_14),y)
+TARGET_CFLAGS += -std=gnu89
+endif
+
 CONFIGURE_ARGS += \
 	--enable-sqlite=$(if $(CONFIG_RADLIB_SQLITE),yes,no) \
 	CPPFLAGS="$(TARGET_CPPFLAGS)" \
