@@ -9,7 +9,7 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=lmbench
 PKG_REAL_VERSION:=3-4
-PKG_RELEASE:=1
+PKG_RELEASE:=2
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_VERSION:=701c6c35b0270d4634fb1dc5272721340322b8ed
@@ -18,19 +18,22 @@ PKG_MIRROR_HASH:=a2359e0b760e6319394652b4d0a7548a39da6816a3683fe36304ee309dcc7eb
 
 PKG_VERSION:=$(subst -,_alpha,$(PKG_REAL_VERSION))
 
+PKG_LICENSE:=GPL-2.0-or-later
+PKG_LICENSE_FILES:=COPYING COPYING-2
+
 include $(INCLUDE_DIR)/package.mk
 
 define Package/lmbench
-	SECTION:=utils
-	CATEGORY:=Utilities
-	TITLE:=lmbench microbenchmarks
-	URL:=http://sourceforge.net/projects/lmbench
-	DEPENDS:=+libtirpc
+  SECTION:=utils
+  CATEGORY:=Utilities
+  TITLE:=microbenchmarks
+  URL:=http://sourceforge.net/projects/lmbench
+  DEPENDS:=+libtirpc
 endef
 
 define Package/lmbench/description
- lmbench is a series of micro benchmarks intended to measure basic operating
- system and hardware system metrics.
+ lmbench is a series of micro benchmarks intended to measure basic
+ operating system and hardware system metrics.
 endef
 
 TARGET_CPPFLAGS += -I$(STAGING_DIR)/opt/include/tirpc

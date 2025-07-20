@@ -1,0 +1,192 @@
+--- a/src/bench.h
++++ b/src/bench.h
+@@ -273,6 +273,8 @@ extern void benchmp(benchmp_f initialize
+ 		    void* cookie
+ 	);
+ 
++extern void lmbench_usage(int argc, char *argv[], char* usage);
++
+ /* 
+  * These are used by weird benchmarks which cannot return, such as page
+  * protection fault handling.  See lat_sig.c for sample usage.
+--- a/src/bw_tcp.c
++++ b/src/bw_tcp.c
+@@ -139,7 +139,7 @@ initialize(iter_t iterations, void *cook
+ 		perror("socket connection");
+ 		exit(1);
+ 	}
+-	sprintf(buf, "%lu", state->msize);
++	sprintf(buf, "%llu", state->msize);
+ 	if (write(state->sock, buf, strlen(buf) + 1) != strlen(buf) + 1) {
+ 		perror("control write");
+ 		exit(1);
+--- a/src/lat_fs.c
++++ b/src/lat_fs.c
+@@ -196,7 +196,7 @@ setup_names(iter_t iterations, void* coo
+ 	doff = 0;
+ 	setup_names_recurse(&foff, &doff, depth, state);
+ 	if (foff != iterations || doff != state->ndirs - 1) {
+-		fprintf(stderr, "setup_names: ERROR: foff=%lu, iterations=%lu, doff=%lu, ndirs=%lu, depth=%d\n", (unsigned long)foff, (unsigned long)iterations, (unsigned long)doff, (unsigned long)state->ndirs, depth);
++		fprintf(stderr, "setup_names: ERROR: foff=%lu, iterations=%lu, doff=%lu, ndirs=%lu, depth=%ld\n", (unsigned long)foff, (unsigned long)iterations, (unsigned long)doff, (unsigned long)state->ndirs, depth);
+ 	}
+ }
+ 
+@@ -249,7 +249,7 @@ benchmark_mk(iter_t iterations, void* co
+ 
+ 	while (iterations-- > 0) {
+ 		if (!state->names[iterations]) {
+-			fprintf(stderr, "benchmark_mk: null filename at %lu of %lu\n", iterations, state->n);
++			fprintf(stderr, "benchmark_mk: null filename at %lu of %u\n", iterations, state->n);
+ 			continue;
+ 		}
+ 		mkfile(state->names[iterations], state->size);
+@@ -263,7 +263,7 @@ benchmark_rm(iter_t iterations, void* co
+ 
+ 	while (iterations-- > 0) {
+ 		if (!state->names[iterations]) {
+-			fprintf(stderr, "benchmark_rm: null filename at %lu of %lu\n", iterations, state->n);
++			fprintf(stderr, "benchmark_rm: null filename at %lu of %u\n", iterations, state->n);
+ 			continue;
+ 		}
+ 		unlink(state->names[iterations]);
+--- a/src/lat_mem_rd.c
++++ b/src/lat_mem_rd.c
+@@ -65,7 +65,7 @@ main(int ac, char **av)
+ 	len *= 1024 * 1024;
+ 
+ 	if (optind == ac - 1) {
+-		fprintf(stderr, "\"stride=%d\n", STRIDE);
++		fprintf(stderr, "\"stride=%ld\n", STRIDE);
+ 		for (range = LOWER; range <= len; range = step(range)) {
+ 			loads(len, range, STRIDE, parallel, 
+ 			      warmup, repetitions);
+@@ -73,7 +73,7 @@ main(int ac, char **av)
+ 	} else {
+ 		for (i = optind + 1; i < ac; ++i) {
+ 			stride = bytes(av[i]);
+-			fprintf(stderr, "\"stride=%d\n", stride);
++			fprintf(stderr, "\"stride=%ld\n", stride);
+ 			for (range = LOWER; range <= len; range = step(range)) {
+ 				loads(len, range, stride, parallel, 
+ 				      warmup, repetitions);
+--- a/src/lat_select.c
++++ b/src/lat_select.c
+@@ -164,7 +164,7 @@ doit(iter_t iterations, void * cookie)
+ 	state_t * 	state = (state_t *)cookie;
+ 	fd_set		nosave;
+ 	static struct timeval tv;
+-	static count = 0;
++	static int count = 0;
+ 	
+ 	tv.tv_sec = 0;
+ 	tv.tv_usec = 0;
+--- a/src/lib_debug.c
++++ b/src/lib_debug.c
+@@ -70,7 +70,7 @@ bw_quartile(uint64 bytes)
+ {
+ 	double	b = (double)bytes;
+ 
+-	fprintf(stderr, "%d\t%e\t%e\t%e\t%e\t%e\n", get_n(), 
++	fprintf(stderr, "%lld\t%e\t%e\t%e\t%e\t%e\n", get_n(), 
+ 		(double)bytes / (1000000. * percent_point(0.00)),
+ 		(double)bytes / (1000000. * percent_point(0.25)),
+ 		(double)bytes / (1000000. * percent_point(0.50)),
+@@ -86,7 +86,7 @@ bw_quartile(uint64 bytes)
+ void
+ nano_quartile(uint64 n)
+ {
+-	fprintf(stderr, "%d\t%e\t%e\t%e\t%e\t%e\n", get_n(), 
++	fprintf(stderr, "%lld\t%e\t%e\t%e\t%e\t%e\n", get_n(), 
+ 		percent_point(0.00) * 1000. / (double)n,
+ 		percent_point(0.25) * 1000. / (double)n,
+ 		percent_point(0.50) * 1000. / (double)n,
+@@ -107,7 +107,7 @@ print_mem(char* addr, size_t size, size_
+ 	base = (uint64)addr;
+ 	for (p = addr; *(char**)p != addr; p = *(char**)p) {
+ 		off = (uint64)p - base;
+-		fprintf(stderr, "\t%lu\t%lu\t%lu\n", off / pagesize, 
++		fprintf(stderr, "\t%llu\t%llu\t%llu\n", off / pagesize, 
+ 			(off % pagesize) / line, (off % line) / sizeof(char*));
+ 	}
+ }
+--- a/src/lib_debug.h
++++ b/src/lib_debug.h
+@@ -1,6 +1,8 @@
+ #ifndef _LIB_DEBUG_H
+ #define _LIB_DEBUG_H
+ 
++#include <math.h>
++
+ void	print_results(int details);
+ void	bw_quartile(uint64 bytes);
+ void	nano_quartile(uint64 n);
+--- a/src/lib_mem.c
++++ b/src/lib_mem.c
+@@ -154,7 +154,7 @@ base_initialize(iter_t iterations, void*
+ 
+ 	if (p == NULL) {
+             printf(" memory allocation failure, current memory size used for\
+-testing is %llu bytes, please choose smaller memory size for testing\n ", state->maxlen);
++testing is %lu bytes, please choose smaller memory size for testing\n ", state->maxlen);
+             return;
+ 	}
+ 
+--- a/src/lib_sched.c
++++ b/src/lib_sched.c
+@@ -91,7 +91,7 @@ handle_scheduler(int childno, int benchp
+ 			     childno * (nbenchprocs + 1) + benchproc);
+ 	} else {
+ 		/* default action: do nothing */
+-		return;
++		return 0;
+ 	}
+ 
+ 	return sched_pin(cpu % sched_ncpus());
+--- a/src/lib_timing.c
++++ b/src/lib_timing.c
+@@ -1623,7 +1623,7 @@ bread(void* buf, long nbytes)
+ void
+ touch(char *buf, int nbytes)
+ {
+-	static	psize;
++	static int psize;
+ 
+ 	if (!psize) {
+ 		psize = getpagesize();
+--- a/src/Makefile
++++ b/src/Makefile
+@@ -111,7 +111,7 @@ LIBOBJS= $O/lib_tcp.o $O/lib_udp.o $O/li
+ 	$O/lib_sched.o
+ 
+ lmbench: $(UTILS)
+-	@env CFLAGS=-O MAKE="$(MAKE)" MAKEFLAGS="$(MAKEFLAGS)" CC="$(CC)" OS="$(OS)" ../scripts/build all
++	@env CFLAGS="-O -Wno-unused-result" MAKE="$(MAKE)" MAKEFLAGS="$(MAKEFLAGS)" CC="$(CC)" OS="$(OS)" ../scripts/build all
+ 	-@env CFLAGS=-O MAKE="$(MAKE)" MAKEFLAGS="-k $(MAKEFLAGS)" CC="$(CC)" OS="$(OS)" ../scripts/build opt
+ 
+ results: lmbench
+--- a/src/memsize.c
++++ b/src/memsize.c
+@@ -100,10 +100,10 @@ timeit(char *where, size_t size)
+ 		if (range < size && size < range + incr) {
+ 			incr = size - range;
+ 		}
+-		fprintf(stderr, "%dMB OK\r", range/(1024*1024));
++		fprintf(stderr, "%ldMB OK\r", range/(1024*1024));
+ 	}
+ 	fprintf(stderr, "\n");
+-	printf("%d\n", (size>>20));
++	printf("%ld\n", (size>>20));
+ }
+ 
+ static void
+--- a/src/mhz.c
++++ b/src/mhz.c
+@@ -423,7 +423,7 @@ print_data(double mhz, result_t* data)
+ 	names[7] = name_8();
+ 	names[8] = name_9();
+ 
+-	printf("/* \"%s\", \"%s\", \"%s\", %d, %.0f, %d, %f, %f */\n", 
++	printf("/* \"%s\", \"%s\", \"%s\", %d, %.0f, %d, %f, %lld */\n", 
+ 	       CPU_name, uname, email, speed, 
+ 	       mhz, get_enough(0), l_overhead(), t_overhead());
+ 	printf("result_t* data[] = { \n");
