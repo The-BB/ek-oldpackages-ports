@@ -6,6 +6,7 @@
 #
 
 include $(TOPDIR)/rules.mk
+include $(INCLUDE_DIR)/kernel.mk
 
 PKG_NAME:=oprofile
 PKG_VERSION:=1.4.0
@@ -27,7 +28,6 @@ PKG_BUILD_FLAGS:=no-mips16
 PKG_BUILD_DEPENDS:=binutils
 
 include $(INCLUDE_DIR)/package.mk
-include $(INCLUDE_DIR)/kernel.mk
 include $(INCLUDE_DIR)/nls.mk
 
 define Package/oprofile
