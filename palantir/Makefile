@@ -11,7 +11,7 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=palantir
 PKG_VERSION:=2.8_pre3
-PKG_RELEASE:=1
+PKG_RELEASE:=2
 
 PKG_SOURCE:=$(PKG_NAME)-server-20130906.tgz
 PKG_SOURCE_URL:=http://www.fastpath.it/products/palantir/pub/

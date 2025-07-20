@@ -1,0 +1,34 @@
+src/code.c:97:15: error: implicit declaration of function 'memcpy' [-Wimplicit-function-declaration]
+   97 |         (void)memcpy( (char *)S->dp0, (char *)(S->dp0 + 160),
+      |               ^~~~~~
+...
+main.c:1188:54: error: passing argument 3 of 'accept' from incompatible pointer type [-Wincompatible-pointer-types]
+ 1188 |           sock=accept(fd[i],(struct sockaddr *)&name,&size);
+      |                                                      ^~~~~
+      |                                                      |
+      |                                                      size_t * {aka long unsigned int *}
+
+---
+
+--- a/server/libgsm/src/code.c
++++ b/server/libgsm/src/code.c
+@@ -16,6 +16,8 @@
+ 	extern char	* memcpy P((char *, char *, int));
+ #endif
+ 
++#include <string.h> /* GCC-14.x */
++
+ #include	"private.h"
+ #include	"gsm.h"
+ #include	"proto.h"
+--- a/server/main.c
++++ b/server/main.c
+@@ -845,7 +845,7 @@ int main(int argc, char *argv[])
+ {
+  int c;
+  char *s=0, *ap, *offline_file=0, *config_file=0;
+- size_t size;
++ unsigned int size;
+  struct sockaddr_storage name;
+  char peer_addr[NI_MAXHOST];
+  int i,m,ss,sock;
