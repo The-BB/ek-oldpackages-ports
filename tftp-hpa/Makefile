@@ -36,6 +36,10 @@ define Package/tftpd-hpa
   TITLE:=An enhanced version of the BSD TFTP server
 endef
 
+ifeq ($(CONFIG_GCC_USE_VERSION_14),y)
+TARGET_CFLAGS += -std=gnu89
+endif
+
 CONFIGURE_ARGS += \
 	--without-tcpwrappers \
 	CFLAGS="$(TARGET_CFLAGS) $(TARGET_CPPFLAGS)"
